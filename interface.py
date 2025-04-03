@@ -10,7 +10,7 @@ PROJECT = 'default'
 root = tk.Tk()
 root.geometry("1024x768")
 
-tabControl = ttk.Notebook(root) 
+tabControl = ttk.Notebook(root)
 tab1 = ttk.Frame(tabControl)
 tab2 = ttk.Frame(tabControl)
 tab3 = ttk.Frame(tabControl)
@@ -21,7 +21,7 @@ tab_alphabet = TabAlphabetum(tab1)
 tab_alphabet.setProject(PROJECT)
 
 #TAB2
-keyboard = MyKeyboard(tab2)
+
 
 
 
@@ -30,7 +30,7 @@ keyboard = MyKeyboard(tab2)
 tabControl.add(tab1, text ='Alpabet')
 tabControl.add(tab2, text ='Source text')
 tabControl.add(tab3, text ='Frequency')
-tabControl.pack(expand = 1, fill ="both") 
+tabControl.pack(expand = 1, fill ="both")
 
 root.mainloop()
 

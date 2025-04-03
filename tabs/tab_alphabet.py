@@ -29,28 +29,42 @@ class TabAlphabetum:
         self.button_add = tk.Button(frame_canvas, text = "Add", command=self.saveLetter)
         self.button_add.grid(row=1,column=1, sticky=E)
         
+        frame_canvas.pack(pady=20)
 
-        frame_canvas.grid()
+        self.keyboard = MyKeyboard(root, MyKeyboard.MODE_SELECT)
 
-        self.keyboard = MyKeyboard(root)
+        self.button_clear_keyboard = tk.Button(root, text = "Clear letters", command=self.clearAllLetters)
+        self.button_clear_keyboard.pack()
+
+        self.button_clear_keyboard = tk.Button(root, text = "Delete selected", command=self.clearSelectedLetter)
+        self.button_clear_keyboard.pack()
 
         
 
     def setProject(self, project):
         self.project = project
+        self.folder = 'projects/'+self.project+'/letters'
 
     def clearCanvas(self):
         self.canvas.clear()
 
+    def clearAllLetters(self):
+        letters = os.listdir(self.folder)
+        for letter in letters:
+            os.remove(self.folder+'/'+letter)
+        self.keyboard.clear()
+
+    def clearSelectedLetter(self):
+        self.keyboard.deleteSelectedButton()
+
     def saveLetter(self):
 
         letter_index = 1
-        folder = 'projects/'+self.project+'/letters'
-        isExist = os.path.exists(folder)
+        isExist = os.path.exists(self.folder)
         if not isExist:
-            os.makedirs(folder)
+            os.makedirs(self.folder)
 
-        letters = os.listdir(folder)
+        letters = os.listdir(self.folder)
         #print(letters)
 
         found = True
@@ -65,19 +79,18 @@ class TabAlphabetum:
         self.canvas.save('temp')
         # use PIL to convert to PNG 
         img = Image.open('temp.eps')
-        img.save(folder+'/'+str(letter_index) + '.png', 'png')
+        img.save(self.folder+'/'+str(letter_index) + '.png', 'png')
 
         self.clearCanvas()
 
-        self.keyboard.addButton(letter_index, folder+'/'+str(letter_index) + '.png')
+        self.keyboard.addButton(letter_index, self.folder+'/'+str(letter_index) + '.png')
 
-    def loadLetters():
-
-        folder = 'projects/'+self.project+'/letters'
-        isExist = os.path.exists(folder)
+    def loadLetters(self):
+       
+        isExist = os.path.exists(self.folder)
         if not isExist:
-            os.makedirs(folder)
+            os.makedirs(self.folder)
 
-        letters = os.listdir(folder)
+        letters = os.listdir(self.folder)
 
         
